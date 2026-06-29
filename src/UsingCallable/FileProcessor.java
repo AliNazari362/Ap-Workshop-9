@@ -1,3 +1,5 @@
+package UsingCallable;
+
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -32,7 +34,7 @@ public class FileProcessor {
                 executorService.shutdown();
                 executorService.close();
                 break;
-            };
+            }
 
             Future<String> future = futureHashMap.get("file_" + number + ".txt");
             if (future == null) {
