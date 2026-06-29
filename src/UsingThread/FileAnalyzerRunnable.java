@@ -1,7 +1,9 @@
+package UsingThread;
+
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-public class FileAnalyzerRunnable implements Callable<String> {
+public class FileAnalyzerRunnable implements Runnable {
 
     private final FileAnalyzer fileAnalyzer;
 
@@ -10,7 +12,7 @@ public class FileAnalyzerRunnable implements Callable<String> {
     }
 
     @Override
-    public String call() {
+    public void run() {
         String largest = fileAnalyzer.findLargestWord();
         String shortest = fileAnalyzer.findShortestWord();
 
@@ -20,17 +22,17 @@ public class FileAnalyzerRunnable implements Callable<String> {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return snedInfo(shortest, largest);
+        snedInfo(shortest, largest);
     }
 
-    private String snedInfo(String shortest, String largest) {
-        return "====================================================\n" +
+    private void snedInfo(String shortest, String largest) {
+        System.out.printf("%s", "====================================================\n" +
                 "= Worker: " + Thread.currentThread().getName() + ".\n" +
                 "= In file: " + fileAnalyzer.getFileName() + ".\n" +
                 "= Words Count: " + fileAnalyzer.wordCount() + ".\n" +
                 "= Longest word and its length: " + largest + " (len: " + largest.length() + ").\n" +
                 "= Shortest word and its length: " + shortest + " (len: " + shortest.length() + ").\n" +
                 "= All words length average: " + fileAnalyzer.averageWordLength() + ".\n" +
-                "====================================================\n";
+                "====================================================\n");
     }
 }
